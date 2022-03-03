@@ -7,9 +7,9 @@
             <div class="card blue-grey lighten-4">
                 <div class="card-content black-text">
                     <a href="/articles/details/{{article.id}}">
-                        <span class="card-title">{{ article.title }}</span>
+                        <span class="card-title">{{ article.title | truncatechars:45 | safe }}</span>
                     </a>
-                    <p>{{ article.body | truncatechars:100 | safe }}</p>
+                    <p>{{ article.body | truncatechars:60 | safe }}</p>
 
                     <span class="green-text" style="font-weight: bold;">{{ article.user.first_name }} {{ article.user.last_name }}</span>
 

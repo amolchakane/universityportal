@@ -1,7 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from .models import Articles, UserRoles, User
-from .forms import NewUserForm, ArticleForm
+from .forms import NewUserForm, ArticleForm, CommentForm
 from django.contrib import messages
 from django.contrib.auth import login
 from django.shortcuts import get_object_or_404
@@ -96,3 +96,18 @@ def register(request):
 def article_approve(request, id):
     Articles.objects.filter(id=id).update(status='approved')
     return redirect('homepage')
+
+
+def add_comment_to_post(request, pk):
+    article = get_object_or_404(Articles, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = article
+            comment.author = request.user
+            comment.save()
+            return redirect('details', article.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'add_comment_to_article.html', {'form': form})
