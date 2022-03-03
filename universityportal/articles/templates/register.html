@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <select name="usertype">
+            <option value="student">Student</option>
+            <option value="professor">Professor</option>
+        </select>
+        <button class="btn">Register</button>
+    </form>
+
+    If you already have an account, <a href="/login"><strong>login</strong></a> instead
+{% endblock %}

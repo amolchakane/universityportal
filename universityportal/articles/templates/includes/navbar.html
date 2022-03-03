@@ -1,0 +1,47 @@
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+    <li><a href="/accounts/logout">Logout</a></li>
+</ul>
+<!-- Navbar -->
+<nav class="purple lighten-2">
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo">University Portal</a>
+        <!-- Adds mobile support -->
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <!-- <li><a href="/">Home</a></li> -->
+        {% if user.is_authenticated %}
+            {% if user_role == 'student' %}
+                <li>
+                    <a class="waves-effect waves-light btn blue lighten-1" href="{% url 'article_new' %}"><i class="material-icons left">add</i>New article</a>
+                </li>
+            {% endif %}
+            <!-- Dropdown Trigger -->
+            <li>
+                <a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                    <!-- <a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="../../../app-assets/images/avatar/avatar-7.png" alt="avatar"><i></i></span></a> -->
+                    <!-- TODO - fixing the username -->
+                    <!-- <span class="left">{{user.username}}</span> -->
+                    <i class="valign-wrapper">
+<!--                        <img src="{{ user.profile.image.url }}" alt="logo" style="height: 38px;" class="responsive-img circle valign-wrapper">-->
+                        <span class="left">{{user.first_name}} {{user.last_name}}</span>
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </i>      
+                </a>
+            </li>
+            <!-- <li><a href="/account">{{user.username}}</a></li> -->
+            <!-- <li><a href="/accounts/logout">Logout</a></li> -->
+        {% else %}
+            <li><a href="/register">Register</a></li>
+            <li><a href="/accounts/login/">Login</a></li>
+        {% endif %}
+    </div>
+    <!-- TODO Mobile support  -->
+    <ul class="sidenav" id="mobile-demo">
+            <li><a href="sass.html">Sass</a></li>
+            <li><a href="badges.html">Components</a></li>
+            <li><a href="collapsible.html">Javascript</a></li>
+            <li><a href="mobile.html">Mobile</a></li>
+          </ul>
+        
+</nav>

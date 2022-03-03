@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row">
+        {% for article in articles %}
+        <div class="col m6">
+            <div class="card blue-grey lighten-4">
+                <div class="card-content black-text">
+                    <a href="/articles/details/{{article.id}}">
+                        <span class="card-title">{{ article.title }}</span>
+                    </a>
+                    <p>{{ article.body | truncatechars:100 | safe }}</p>
+
+                    <span class="green-text" style="font-weight: bold;">{{ article.user.first_name }} {{ article.user.last_name }}</span>
+
+                    <span class="green-text">{{ article.created_at|date }}</span>
+
+                    <span class="blue-text" style="text-transform:capitalize">{{ article.status }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
