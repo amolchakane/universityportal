@@ -1,5 +1,11 @@
 from django.urls import path, include
 from . import views
+from rest_framework import routers
+
+from .views import ArticleViewSet
+
+articles_router = routers.DefaultRouter()
+articles_router.register("articlesapi", viewset=ArticleViewSet, basename="articlesapi")
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),

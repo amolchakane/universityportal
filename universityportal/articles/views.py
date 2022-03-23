@@ -1,5 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
+from rest_framework.viewsets import ModelViewSet
+
 from .models import Articles, UserRoles, User
 from .forms import NewUserForm, ArticleForm, CommentForm
 from django.contrib import messages
@@ -9,6 +11,9 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+from .serializers import ArticleSerializer
+
+
 @login_required
 def index(request):
     # ToDo:Check role of the user logged in and based on that fetch articles
@@ -24,6 +29,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+@login_required()
 def article_details(request, id):
     articles = Articles.objects.get(id=id)
     context = {
@@ -93,11 +99,13 @@ def register(request):
     )
 
 
+@login_required()
 def article_approve(request, id):
     Articles.objects.filter(id=id).update(status='approved')
     return redirect('homepage')
 
 
+@login_required()
 def add_comment_to_post(request, pk):
     article = get_object_or_404(Articles, pk=pk)
     if request.method == "POST":
@@ -111,3 +119,8 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'add_comment_to_article.html', {'form': form})
+
+
+class ArticleViewSet(ModelViewSet):
+    serializer_class = ArticleSerializer
+    queryset = Articles.objects.all().order_by('-created_at')
