@@ -1,15 +1,13 @@
-from django.http import HttpResponse, Http404
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Articles, UserRoles, User
 from .forms import NewUserForm, ArticleForm, CommentForm
-from django.contrib import messages
-from django.contrib.auth import login
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
-
-
+from .models import Articles, UserRoles
 # Create your views here.
 from .serializers import ArticleSerializer
 

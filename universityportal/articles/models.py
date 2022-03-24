@@ -1,10 +1,7 @@
-from asyncio.windows_events import NULL
-from tkinter import CASCADE
-from django.conf import settings
-from django.db import models
+from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.contrib.auth.models import User
-from ckeditor.fields import RichTextField
+from django.db import models
 
 
 # Create your models here.

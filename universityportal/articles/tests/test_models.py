@@ -1,7 +1,8 @@
 import pytest
 from django.test import RequestFactory
-from mixer.backend.django import mixer
 from django.urls import reverse
+from mixer.backend.django import mixer
+
 from articles.views import article_details
 
 

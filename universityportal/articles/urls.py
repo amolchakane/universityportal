@@ -1,7 +1,7 @@
 from django.urls import path, include
-from . import views
 from rest_framework import routers
 
+from . import views
 from .views import ArticleViewSet
 
 articles_router = routers.DefaultRouter()
