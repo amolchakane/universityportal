@@ -4,7 +4,6 @@ from django.urls import reverse
 from mixer.backend.django import mixer
 
 from articles.views import article_details
-from articles.models import Articles
 
 
 @pytest.fixture
