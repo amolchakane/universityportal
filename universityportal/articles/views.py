@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from rest_framework.viewsets import ModelViewSet
@@ -29,11 +29,16 @@ def index(request):
 
 @login_required()
 def article_details(request, id):
-    articles = Articles.objects.get(id=id)
-    context = {
-        'article': articles
-    }
-    return render(request, 'article_details.html', context)
+    try:
+        article = Articles.objects.get(id=id)
+        if article.user != request.user and article.reviewer != request.user:
+            return render(request, '403.html')
+        context = {
+            'article': article
+        }
+        return render(request, 'article_details.html', context)
+    except ObjectDoesNotExist:
+        return render(request, '404.html')
 
 
 @login_required
@@ -59,9 +64,12 @@ def article_new(request):
 
 @login_required
 def article_edit(request, pk):
-    article = get_object_or_404(Articles, pk=pk)
+    try:
+        article = Articles.objects.get(pk=pk)
+    except ObjectDoesNotExist:
+        return render(request, '404.html')
     if article.user != request.user:
-        raise Http404  # or similar
+        return render(request, '403.html')
     if request.method == "POST":
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
