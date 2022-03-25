@@ -5,6 +5,7 @@ from .models import Articles, Comment
 
 
 class NewUserForm(UserCreationForm):
+    """New user registration form"""
     email = forms.EmailField(required=True)
 
     class Meta:
@@ -20,12 +21,14 @@ class NewUserForm(UserCreationForm):
 
 
 class ArticleForm(forms.ModelForm):
+    """Article creation form"""
     class Meta:
         model = Articles
         fields = ('title', 'body',)
 
 
 class CommentForm(forms.ModelForm):
+    """Form for adding comment"""
     class Meta:
         model = Comment
         fields = ('text',)
