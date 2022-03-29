@@ -16,12 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from articles.urls import articles_router
 
 urlpatterns = [
     path('', include('articles.urls')),
     path('admin/', admin.site.urls),
     path('articles/', include('articles.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('articlesapi/', include(articles_router.urls)),
 ]
