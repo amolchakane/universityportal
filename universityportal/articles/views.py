@@ -4,12 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
-from rest_framework.viewsets import ModelViewSet
 
 from .forms import NewUserForm, ArticleForm, CommentForm
 from .models import Articles, UserRoles
+
+
 # Create your views here.
-from .serializers import ArticleSerializer
 
 
 @login_required
@@ -121,12 +121,17 @@ def register(request):
 
 
 @login_required()
-def article_approve(id):
+def article_approve(request, pk):
     """To approve Article by user (professor)
     id: Id of the Article to be approved
     """
-    Articles.objects.filter(id=id).update(status='approved')
-    return redirect('homepage')
+    print("pk:", pk)
+    article = Articles.objects.get(pk=pk)
+    if article and article.reviewer == request.user:
+        Articles.objects.filter(pk=pk).update(status='approved')
+        return redirect('homepage')
+    else:
+        return render(request, '403.html')
 
 
 @login_required()
@@ -147,8 +152,3 @@ def add_comment_to_article(request, pk):
     else:
         form = CommentForm()
     return render(request, 'add_comment_to_article.html', {'form': form})
-
-
-class ArticleViewSet(ModelViewSet):
-    serializer_class = ArticleSerializer
-    queryset = Articles.objects.all().order_by('-created_at')

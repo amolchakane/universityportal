@@ -14,7 +14,7 @@
                 <a class="waves-effect waves-light btn href" href="{% url 'article_edit' pk=article.pk %}"><i class="material-icons left">edit</i>Edit</a>
             {% endif %}
             {% if article.reviewer == request.user and article.status == 'pending' %}
-                <a class="waves-effect waves-light btn href" href="{% url 'approve' id=article.id %}"><i class="material-icons left">approval</i>Approve</a>
+                <a class="waves-effect waves-light btn href" href="{% url 'approve' pk=article.pk %}"><i class="material-icons left">approval</i>Approve</a>
             {% endif %}
         </div>
     </div>
